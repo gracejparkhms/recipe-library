@@ -819,7 +819,7 @@
 
     <div id="recipe-list">
       <div class="empty-state">
-        <p>Library empty.<br>Add a recipe URL above.</p>
+        <p>Library empty.</p>
       </div>
     </div>
   </div>
@@ -842,8 +842,7 @@
     </div>
 
     <div id="welcome-screen">
-      <h2>Your Recipe Library</h2>
-      <p>Paste any recipe URL above and Claude will extract the official recipe verbatim, plus tips and modifications from the comments.</p>
+      <p>Paste any recipe URL above to scrape the cutting board for ingredients, instructions, and community modifications.</p>
     </div>
 
     <div id="recipe-view" style="display:none"></div>
@@ -1152,7 +1151,7 @@ function renderList() {
     `${recipes.length} recipe${recipes.length !== 1 ? 's' : ''} saved`;
 
   if (filtered.length === 0) {
-    list.innerHTML = `<div class="empty-state"><p>${recipes.length === 0 ? 'Library empty.<br>Add a recipe URL above.' : 'No recipes match your search.'}</p></div>`;
+    list.innerHTML = `<div class="empty-state"><p>${recipes.length === 0 ? 'Library empty.' : 'No recipes match your search.'}</p></div>`;
     return;
   }
 
