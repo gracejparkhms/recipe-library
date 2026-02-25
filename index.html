@@ -1454,7 +1454,7 @@ async function pasteRecipe() {
   const sourceName = sourceUrl ? new URL(sourceUrl.startsWith('http') ? sourceUrl : 'https://' + sourceUrl).hostname.replace('www.', '') : '';
 
   document.getElementById('paste-btn').disabled = true;
-  setStatus('Parsing the recipe...', 'loading');
+  setStatus('Slicing and dicing...', 'loading');
 
   try {
     const recipe = await parseRecipeFromText(pageText, sourceUrl, sourceName);
@@ -1493,7 +1493,7 @@ async function scrapeRecipe() {
   if (!url) { setStatus('Please enter a recipe URL.', 'error'); return; }
 
   document.getElementById('scrape-btn').disabled = true;
-  setStatus('Fetching and parsing the recipe...', 'loading');
+  setStatus('Slicing and dicing...', 'loading');
 
   try {
     const proxyUrl = `https://api.allorigins.win/get?url=${encodeURIComponent(url)}`;
