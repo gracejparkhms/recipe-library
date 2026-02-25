@@ -744,9 +744,10 @@
   }
 
   .heat-slider-labels {
-    display: flex;
-    justify-content: space-between;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
     margin-top: 6px;
+    padding: 0 7px;
   }
 
   .heat-slider-labels span {
@@ -755,7 +756,6 @@
     letter-spacing: 0.5px;
     color: var(--dim);
     text-align: center;
-    width: 20%;
   }
 
   .heat-slider-labels span:first-child { text-align: left; }
@@ -1500,7 +1500,7 @@ function renderList() {
       <div class="recipe-card-meta">
         ${timeStr ? `<span>${timeStr}</span>` : ''}
         ${servStr ? `<span>${servStr}</span>` : ''}
-        ${r.source_name ? `<span>${r.source_name}</span>` : ''}
+        
       </div>
     </div>`;
   }).join('');
@@ -1610,7 +1610,7 @@ function showRecipe(id) {
 
         ${ingredientsHtml ? `
           <div class="rv-section-title">Ingredients</div>
-          <p style="font-size:11px;color:var(--dim);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:10px;">Click to check off</p>
+          <p style="font-size:11px;color:var(--dim);margin-bottom:10px;"><em>&ldquo;click to check off&rdquo;</em></p>
           <div id="ingredients-container">${ingredientsHtml}</div>
           <hr class="rv-divider">
         ` : ''}
