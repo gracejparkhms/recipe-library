@@ -2384,7 +2384,7 @@ Steps: ${(r.steps || []).join(' | ')}`;
       body: JSON.stringify({
         model: 'claude-sonnet-4-6',
         max_tokens: 600,
-        messages: [{ role: 'user', content: `Compare these ${selected.length} recipes and summarize the key differences in ingredients and technique in 3-5 concise sentences. Focus on what makes each recipe distinct.
+        messages: [{ role: 'user', content: `Compare these ${selected.length} recipes. Use ## subheadings in ALL CAPS for each category of difference (e.g. ## APPROACH, ## FLAVOR PROFILE, ## TECHNIQUE, ## DIETARY). Do not write any introductory sentence - start immediately with the first ## heading. Keep each section to 1-2 sentences.
 
 ${recipeTexts}` }]
       })
@@ -2392,7 +2392,7 @@ ${recipeTexts}` }]
     const data = await res.json();
     document.getElementById('compare-summary-text').innerHTML = markdownToHtml(data.content[0].text);
   } catch(e) {
-    document.getElementById('compare-summary-text').textContent = 'Could not generate summary.';
+    document.getElementById('compare-summary-text').textContent = 'Could not generate summary: ' + e.message;
   }
 }
 
