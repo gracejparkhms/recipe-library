@@ -2324,10 +2324,9 @@ function markdownToHtml(text) {
     // *italic* -> <em>
     .replace(/\*(.+?)\*/g, '<em>$1</em>')
     // Blank lines -> paragraph breaks
-    .replace(/
-{2,}/g, '</p><p>')
+    .replace(/\n{2,}/g, '</p><p>')
     // Wrap in paragraph
-    .replace(/^(.)/s, '<p>$1')
+    .replace(/^([\s\S])/, '<p>$1')
     + '</p>';
 }
 
