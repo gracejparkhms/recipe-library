@@ -747,29 +747,32 @@
 
   .compare-bar-slots {
     display: flex;
-    gap: 6px;
-    flex-wrap: wrap;
+    flex-direction: column;
+    gap: 4px;
   }
 
   .compare-slot {
     font-size: 10px;
     text-transform: uppercase;
     letter-spacing: 0.5px;
-    padding: 4px 8px;
+    padding: 5px 8px;
     border: 1px dashed var(--border);
     color: var(--dim);
-    flex: 1;
-    min-width: 60px;
-    text-align: center;
+    width: 100%;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+    direction: ltr;
+    box-sizing: border-box;
   }
 
   .compare-slot.filled {
     border-style: solid;
     border-color: var(--dark);
     color: var(--black);
+    /* middle ellipsis: show start and use rtl trick for end */
+    direction: ltr;
+    unicode-bidi: plaintext;
   }
 
   .compare-bar-actions {
@@ -2271,6 +2274,12 @@ function toggleCompare(event, id) {
   renderList();
 }
 
+function midEllipsis(str, maxLen) {
+  if (!str || str.length <= maxLen) return str;
+  const half = Math.floor((maxLen - 3) / 2);
+  return str.slice(0, half) + '...' + str.slice(str.length - half);
+}
+
 function updateCompareBar() {
   document.getElementById('compare-count').textContent = compareIds.length;
   const btn = document.getElementById('compare-go-btn');
@@ -2279,7 +2288,7 @@ function updateCompareBar() {
     const slot = document.getElementById('cslot-' + i);
     const r = compareIds[i] ? recipes.find(x => x.id === compareIds[i]) : null;
     if (r) {
-      slot.textContent = r.title || 'Untitled';
+      slot.textContent = midEllipsis(r.title || 'Untitled', 38);
       slot.classList.add('filled');
     } else {
       slot.textContent = 'empty';
