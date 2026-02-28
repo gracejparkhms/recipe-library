@@ -834,6 +834,23 @@
     color: var(--black);
   }
 
+  #compare-summary-text p {
+    margin-bottom: 10px;
+  }
+
+  #compare-summary-text p:last-child { margin-bottom: 0; }
+
+  .compare-diff-heading {
+    font-size: 10px;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--dim);
+    margin: 14px 0 4px;
+  }
+
+  .compare-diff-heading:first-child { margin-top: 0; }
+
   #compare-columns {
     display: flex;
     flex: 1;
@@ -2297,6 +2314,23 @@ function updateCompareBar() {
   });
 }
 
+function markdownToHtml(text) {
+  return text
+    // ## Headings -> bold section labels
+    .replace(/^##\s+(.+)$/gm, '<div class="compare-diff-heading">$1</div>')
+    .replace(/^#\s+(.+)$/gm, '<div class="compare-diff-heading">$1</div>')
+    // **bold** -> <strong>
+    .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+    // *italic* -> <em>
+    .replace(/\*(.+?)\*/g, '<em>$1</em>')
+    // Blank lines -> paragraph breaks
+    .replace(/
+{2,}/g, '</p><p>')
+    // Wrap in paragraph
+    .replace(/^(.)/s, '<p>$1')
+    + '</p>';
+}
+
 async function runCompare() {
   if (compareIds.length < 2) return;
   const selected = compareIds.map(id => recipes.find(r => r.id === id)).filter(Boolean);
@@ -2357,7 +2391,7 @@ ${recipeTexts}` }]
       })
     });
     const data = await res.json();
-    document.getElementById('compare-summary-text').textContent = data.content[0].text;
+    document.getElementById('compare-summary-text').innerHTML = markdownToHtml(data.content[0].text);
   } catch(e) {
     document.getElementById('compare-summary-text').textContent = 'Could not generate summary.';
   }
